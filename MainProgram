@@ -1,0 +1,55 @@
+import pandas as pd 
+df = pd.read_csv(r'C:\Users\tjhug\Downloads\FinalPythonStocks.csv')
+df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+print("Please Choose an Industry (Technology, Insurance, Healthcare, Agriculture, Banking)")
+
+x = input().lower()
+
+print("Please Pick a Method to Sort the Stocks by. (Rate of Return, Beta, Market Cap)")
+
+y = input().lower()
+
+
+if x == "banking":
+    df1 = df.loc[(df.Sector == "Banking")]
+    
+elif x == "technology":
+    df1 = df.loc[(df.Sector == "Tech")]
+    
+elif x == "insurance":
+    df1 = df.loc[(df.Sector == "Insurance")]
+    
+elif x == "healthcare":
+    df1 = df.loc[(df.Sector == "Healthcare")]
+
+
+elif x == "agriculture":
+    df1 = df.loc[(df.Sector == "Agriculture")]
+
+else:
+    print("Please enter a correct value.")
+
+if y == "rate of return":
+    df.Return = df.Return.astype(float)
+    df4 = df1.sort_values(by=['Return'], ascending = False)
+    df4['Ranked'] = df1['Return'].rank(ascending=False)
+    df4.dropna(axis=1, how='all')
+    print(df4)
+          
+elif y == "market cap":
+    df.MarketCap = df.MarketCap.astype(float)
+    df4 = df1.sort_values(by=['MarketCap'], ascending = False)
+    df4['Ranked'] = df1['MarketCap'].rank(ascending=False)
+    df4.dropna(axis=1, how='all')
+    print(df4)
+    
+elif y == "beta":
+    df.Beta = df.Beta.astype(float)
+    df4 = df1.sort_values(by=['Beta'], ascending = False)
+    df4['Ranked'] = df1['Beta'].rank(ascending=False)
+    df4.dropna(axis=1, how='all')
+    print(df4)
+    
+else:
+    print("Please enter a correct input.")
